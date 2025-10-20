@@ -18,9 +18,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-APP_NAME = "Chucks Marketplace"  # Change
+APP_NAME = "Ads Marketplace"  # Change
 
-DJ4E_CODE = "42"
+DJ4E_CODE = "e0779614ad667cd730d7868905326cf8"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-yb3=cy&k285b#=!h42%bf+g*07v4lrr+l)fj+_tf1e348fpnkj"
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "social_django",
     "taggit",
     "home.apps.HomeConfig",
+    "mkt.apps.MktConfig",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -96,7 +97,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Go into the Databases tab in PythonAnywhere and create a MySQL
 # password and a database named "market"
 
-# Change all the "drchuck" below to be your PythonAnywhere Account
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",

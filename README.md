@@ -112,17 +112,17 @@ SQLite value for the `DATABASES` variable and comment it out.
     # }
 
 Add (or update) an entry to point Django at your newly created MySQL database.  In this example
-DATABASES value, your PythonAnywhere account is `drchuck` and the database you
+DATABASES value, your PythonAnywhere account is `[pythonanywhere-username]` and the database you
 created is `market` and the password you set for the database is `phone_153742`.
 Change the sample values below to match the values for your MySQL database.
 
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'drchuck$market',
-            'USER': 'drchuck',
+            'NAME': '[pythonanywhere-username]$market',
+            'USER': '[pythonanywhere-username]',
             'PASSWORD': 'phone_153742',
-            'HOST': 'drchuck.mysql.pythonanywhere-services.com',
+            'HOST': '[pythonanywhere-username].mysql.pythonanywhere-services.com',
              'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             },
