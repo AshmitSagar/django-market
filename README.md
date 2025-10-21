@@ -4,7 +4,7 @@ Django Marketplace
 
 This is a repository of a django marketplace used to serve ads
 
-You can visit the working website on [Django Market - PythonAnywhere](https://github.com/AshmitSagar/django-market/)
+You can visit the working website on [Django Market - PythonAnywhere](https://symphony777.pythonanywhere.com/)
 
 Installing this on PythonAnywhere
 ---------------------------------
