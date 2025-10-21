@@ -8,3 +8,6 @@ database_settings.py
 db.save
 .ve*
 .venv
+
+# Stop github_social changes frombeing pushed to github
+github_settings.py

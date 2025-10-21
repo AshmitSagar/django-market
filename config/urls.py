@@ -20,6 +20,7 @@ from django.urls import path
 from django.urls import include, re_path
 from django.views.static import serve
 import os
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # path("", include("home.urls")),
@@ -58,7 +59,12 @@ try:
     from . import github_settings
 
     social_login = "registration/login_social.html"
-    urlpatterns.insert(0, path("accounts/login/", auth_views.LoginView.as_view(template_name=social_login)))  # type: ignore
+    urlpatterns.insert(
+        0,
+        path(
+            "accounts/login/", auth_views.LoginView.as_view(template_name=social_login)
+        ),
+    )
     print("Using", social_login, "as the login template")
 except:
     print("Using registration/login.html as the login template")
