@@ -94,8 +94,8 @@ class AdUpdateView(LoginRequiredMixin, View):
             ctx = {"form": form}
             return render(request, self.template_name, ctx)
 
-        pic = form.save(commit=False)
-        pic.save()
+        ad = form.save(commit=False)
+        ad.save()
 
         return redirect(self.success_url)
 
