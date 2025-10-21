@@ -1,0 +1,30 @@
+{% extends "base_bootstrap.html" %}
+{% block content %}
+<h1>Pics</h1>
+<p>
+{% if ad_list %}
+<ul>
+  {% for ad in ad_list %}
+    <li>
+        <a href="{% url 'mkt:detail'  ad.id %}">{{ ad.title }}</a>
+        {% if ad.owner == user %}
+        (<a href="{% url 'mkt:update' ad.id %}">Edit</a> |
+        <a href="{% url 'mkt:delete' ad.id %}">Delete</a>)
+        {% endif %}
+        </p>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no mkt in the database.</p>
+{% endif %}
+</p>
+<p>
+<a href="{% url 'mkt:create' %}">Add an Pic</a> |
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}?next={% url 'mkt:all' %}">Logout</a>
+{% else %}
+<a href="{% url 'login' %}?next={% url 'mkt:all' %}">Login</a>
+{% endif %}
+</p>
+{% endblock %}

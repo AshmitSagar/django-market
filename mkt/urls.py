@@ -20,5 +20,6 @@ urlpatterns = [
         views.AdDeleteView.as_view(success_url=reverse_lazy("mkt:all")),
         name="delete",
     ),
+    path("ad_picture/<int:pk>", views.stream_file, name="ad_picture"),
 ]
 # We use reverse_lazy in urls.py to delay looking up the view until all the paths are define
