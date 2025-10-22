@@ -12,7 +12,7 @@ from mkt.owner import (
     OwnerDeleteView,
 )
 
-from mkt.models import Ad, Comment
+from mkt.models import Ad, Comment, Fav
 from mkt.forms import CreateForm
 from mkt.forms import CommentForm
 
@@ -47,6 +47,20 @@ class AdDeleteView(OwnerDeleteView):
 class AdListView(OwnerListView):
     model = Ad
     template_name = "mkt/list.html"
+
+    def get(self, request):
+        ad_list = Ad.objects.all()
+        favorites = list()
+        if request.user.is_authenticated:
+            # rows = [{'id': 2}, {'id': 4} ... ]  (A list of rows)
+            rows = request.user.favorite_ads.values("id")
+            print(rows)
+            # favorites = [2, 4, ...] using list comprehension
+            favorites = [row["id"] for row in rows]
+
+        print(favorites)
+        ctx = {"ad_list": ad_list, "favorites": favorites}
+        return render(request, self.template_name, ctx)
 
 
 class AdDetailView(OwnerDetailView):
@@ -139,3 +153,35 @@ class CommentDeleteView(OwnerDeleteView):
     def get_success_url(self):
         ad = self.object.ad
         return reverse("mkt:detail", args=[ad.id])
+
+
+# csrf exemption in class based views
+# https://stackoverflow.com/questions/16458166/how-to-disable-djangos-csrf-validation
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.db.utils import IntegrityError
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class ToggleFavoriteView(LoginRequiredMixin, View):
+    # Add get for manual retrieval
+    def get(self, request, pk):
+        a = get_object_or_404(Ad, id=pk)
+        try:
+            fav = Fav.objects.get(user=request.user, ad=a).delete()
+            return HttpResponse("Favorite present: " + str(fav))
+        except:
+            return HttpResponse(
+                "Favorite not present: " + str(a) + " -> " + str(request.user)
+            )
+
+    def post(self, request, pk):
+        a = get_object_or_404(Ad, id=pk)
+        fav = Fav(user=request.user, ad=a)
+        try:
+            fav.save()
+            return HttpResponse("Favorite added 42")
+        except IntegrityError:  # Already there, lets delete...
+            Fav.objects.get(user=request.user, ad=a).delete()
+            return HttpResponse("Favorite deleted 42")
+        return HttpResponse("Something went wrong")
